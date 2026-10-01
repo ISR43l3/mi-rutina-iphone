@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f7fa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Mi Rutina">
+  <meta name="description" content="Tu organizador personal de tareas y rutinas.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Mi Rutina</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div><p class="eyebrow" id="today-label"></p><h1 id="page-title">Mi día</h1></div>
+      <button class="icon-button" id="backup-button" aria-label="Guardar copia de seguridad" title="Guardar copia">↥</button>
+      <input id="restore-file" type="file" accept="application/json,.json" hidden>
+    </header>
+
+    <main>
+      <section class="page active" id="page-today" aria-labelledby="page-title">
+        <div class="welcome-row">
+          <div><h2>Hola, ¿qué tienes en mente?</h2><p>Di tu tarea o escríbela aquí.</p></div>
+          <div class="sun-orb" aria-hidden="true">☀</div>
+        </div>
+
+        <form id="quick-task-form" class="quick-card">
+          <label class="sr-only" for="quick-task">Nueva tarea</label>
+          <input id="quick-task" autocomplete="off" placeholder="Ej.: llamar a Juan mañana a las 18" required>
+          <p class="dictation-hint">En iPhone, toca el micrófono del teclado para dictar.</p>
+          <div class="quick-bottom"><span class="date-hint">Hoy o mañana · hora opcional</span><button class="primary-button" type="submit"><span>＋</span> Añadir</button></div>
+        </form>
+
+        <div class="stats-grid">
+          <article class="stat-card"><span class="stat-icon aqua">✓</span><div><strong id="task-progress">0/0</strong><span>tareas hechas</span></div></article>
+          <article class="stat-card"><span class="stat-icon lilac">↻</span><div><strong id="routine-count">0</strong><span>rutinas activas</span></div></article>
+        </div>
+
+        <div class="section-heading"><div><p class="eyebrow">EN TU AGENDA</p><h2>Tareas de hoy</h2></div><button class="text-button" id="add-detailed-task">＋ Añadir</button></div>
+        <div id="today-tasks" class="task-list"></div>
+      </section>
+
+      <section class="page" id="page-week" aria-labelledby="week-heading">
+        <div class="section-intro"><p class="eyebrow">PRÓXIMOS 7 DÍAS</p><h2 id="week-heading">Tu semana</h2><p>Un vistazo a lo que tienes por delante.</p></div>
+        <div id="week-list" class="week-list"></div>
+      </section>
+
+      <section class="page" id="page-routines" aria-labelledby="routines-heading">
+        <div class="section-intro"><p class="eyebrow">A TU RITMO</p><h2 id="routines-heading">Rutinas</h2><p>Guarda los hábitos que quieres repetir.</p></div>
+        <div id="routine-list" class="routine-list"></div>
+        <button class="wide-button" id="add-routine">＋ Crear una rutina</button>
+      </section>
+    </main>
+
+    <nav class="tabbar" aria-label="Secciones principales">
+      <button class="tab active" data-page="today"><span class="tab-icon">⌂</span><span>Hoy</span></button>
+      <button class="tab" data-page="week"><span class="tab-icon">▦</span><span>Semana</span></button>
+      <button class="tab" data-page="routines"><span class="tab-icon">⟳</span><span>Rutinas</span></button>
+    </nav>
+  </div>
+
+  <dialog id="task-dialog" class="editor-dialog">
+    <form method="dialog" id="task-editor-form">
+      <div class="dialog-heading"><div><p class="eyebrow">NUEVO RECORDATORIO</p><h2>Añadir tarea</h2></div><button class="close-button" value="cancel" aria-label="Cerrar">×</button></div>
+      <label for="task-title">Tarea</label><input id="task-title" required maxlength="120" placeholder="¿Qué tienes que hacer?">
+      <label for="task-date">Fecha y hora</label><input id="task-date" type="datetime-local" required>
+      <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" id="save-task" value="default">Guardar tarea</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="routine-dialog" class="editor-dialog">
+    <form method="dialog" id="routine-editor-form">
+      <div class="dialog-heading"><div><p class="eyebrow">HÁBITOS</p><h2 id="routine-dialog-title">Nueva rutina</h2></div><button class="close-button" value="cancel" aria-label="Cerrar">×</button></div>
+      <label for="routine-name">Nombre</label><input id="routine-name" required maxlength="80" placeholder="Ej.: Estiramientos">
+      <label for="routine-time">Hora</label><input id="routine-time" type="time" value="08:00">
+      <fieldset class="day-picker"><legend>Repetir</legend><div id="day-options"></div></fieldset>
+      <label for="routine-steps">Pasos (opcional)</label><textarea id="routine-steps" rows="3" placeholder="Un paso por línea"></textarea>
+      <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" id="save-routine" value="default">Guardar rutina</button></div>
+    </form>
+  </dialog>
+
+  <div id="toast" role="status" aria-live="polite" class="toast"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>

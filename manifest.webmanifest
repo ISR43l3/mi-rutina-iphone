@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "Mi Rutina — tareas y hábitos",
+  "short_name": "Mi Rutina",
+  "description": "Organizador personal de tareas y rutinas.",
+  "lang": "es-ES",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f7fa",
+  "theme_color": "#f5f7fa",
+  "icons": [
+    { "src": "icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
